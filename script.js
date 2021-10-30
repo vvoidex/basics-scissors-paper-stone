@@ -28,7 +28,7 @@ const itemConverter = function (chooserRandom) {
 }
 // Allows script to choose scissors paper stone randomly
 const randomChooser = function (num) {
-  return 2;
+  // return 2;
   const randomDecimal = Math.random() * num
   const randomInteger = Math.floor(randomDecimal);
   const numberChooser = randomInteger + 1;
