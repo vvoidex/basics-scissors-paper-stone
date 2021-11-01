@@ -6,11 +6,14 @@ let input = false;
 
 let playerName = false;
 
+let bettingMode = "betting time"
+let MultiplayerMode = "multiplayer game"
+
 // Tracks and records wins, loses and draws
 let winLog = 0;
 let loseLog = 0;
 let drawLog = 0;
-
+let totalLog = winLog + loseLog + drawLog;
 // Converts number into string for output
 const itemConverter = function (chooserRandom) {
   chooserRandom;
@@ -38,8 +41,6 @@ const randomChooser = function (num) {
 // Calculates who wins, loses or ties
 const winLossChecker = function (input, chooserRandom) {
   // Allows random strings
-
-  let totalLog = winLog + loseLog + drawLog;
   const scissors = 1;
   const paper = 2;
   const stone = 3;
@@ -94,14 +95,17 @@ const winnerShower = function () {
 const winnerDisplayer = function () {
   let myOutputValue = "";
 
-  if (winLog >= 10) {
-    myOutputValue = `Match is over! ${playerName} wins! Please type 'restart' to play another match.`
-    matchEnder = true;
-  } else if (loseLog >= 10) {
-    myOutputValue = `Match is over! Computer wins! Please type 'restart' to play another match.`
+  if (totalLog >= 5) {
+    myOutputValue = `Match is over!`
+    if (winLog > loseLog) {
+      myOutputValue = myOutputValue + ` ${playerName} wins! Please type 'restart' to play another match.`
+    } else if (winLog === loseLog) {
+      myOutputValue = myOutputValue + ` ${playerName} is tied! Please type 'restart' to play another match.`
+    } else if (winLog < loseLog) {
+      myOutputValue = myOutputValue + ` Computer wins! Please type 'restart' to play another match.`
+    }
     matchEnder = true;
   }
-
   return myOutputValue;
 }
 // Puts all functions into one function
@@ -124,32 +128,33 @@ const winLossFinder = function (input) {
 }
 
 let main = function (input) {
-  let myOutputValue;
+  let myOutputValue = "Invalid input. ${playerName}, please type "scissors", "paper", or "stone".` + '<br>' + '<br>' + `If you wish to restart, please type 'restart'"
+
   // Default message for output
-  if (input === 'scissors' || input === 'paper' || input === 'stone') {
-    myOutputValue = winLossFinder(input);
-  } else {
-    myOutputValue = `Invalid input. ${playerName}, please type "scissors", "paper", or "stone".` + '<br>' + '<br>' + `If you wish to restart, please type 'restart'.`;
-  }
+  // if (input === 'scissors' || input === 'paper' || input === 'stone') {
+  //   myOutputValue = winLossFinder(input);
+  // } else {
+  //   myOutputValue = `Invalid input. ${playerName}, please type "scissors", "paper", or "stone".` + '<br>' + '<br>' + `If you wish to restart, please type 'restart'.`;
+  // }
 
   if (input === '') {
     input = true;
   }
 
   if (playerName === false) {
-    if (input === true)
-      return 'Invalid username. Enter another username.'
-    playerName = input;
+    // if (input === true)
+    //   return 'Invalid username. Enter another username.'
+    // playerName = input;
 
     myOutputValue = `Hello, ${playerName}! (username) Please type "scissors", "paper", or "stone" to start a match.` + '<br>' + '<br>' + `If you would like to change your username, refresh the page and enter your username in the first input.` + '<br>' + '<br>' + `If you wish to restart, please type 'restart'.`
   }
 
-  if (input == 'restart') {
-    matchEnder = false;
+  if (input === "") {
     winLog = 0;
     loseLog = 0;
     drawLog = 0;
-    let totalLog = winLog + loseLog + drawLog;
+    totalLog = winLog + loseLog + drawLog;
+    matchEnder = false;
 
     myOutputValue = "Please type 'scissors', 'paper', or stone to start the match!";
   }
